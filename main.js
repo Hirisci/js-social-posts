@@ -62,20 +62,25 @@ function printMember(container, post) {
     postHTML.querySelector(".post__text").innerHTML = post.content;
     postHTML.querySelector(".post__image img").src = post.media;
     postHTML.querySelector(".post-meta__author").innerHTML = post.author.name;
-    postHTML.querySelector(".post-meta__time").innerHTML = post.created;
+    postHTML.querySelector(".post-meta__time").innerHTML = post.created.split("-").reverse().join("-");
     postHTML.querySelector(".profile-pic").src = post.author.image;
     postHTML.querySelector("#like-counter-1").innerHTML = post.likes
     container.append(postHTML);
 }
 
 
-
 const containerHTML = document.querySelector("#container");
 const templateHTML = document.querySelector("#tpl-post").content.cloneNode(true);
-console.log(templateHTML)
+const likeBtn = document.querySelectorAll(".like-button")
+const likeCoun = document.querySelectorAll(".js-likes-counter")
+
 for (let i = 0; i < posts.length; i++) {
-    //templateHTML.querySelector(".post__text").innerHTML = posts[i].content;
-    //templateHTML.querySelector(".post__image img").src = posts[i].media;
-    //templateHTML.querySelector(".post-meta__author").innerHTML = posts[i].author.name
     printMember(containerHTML,posts[i])
 }
+
+
+
+
+
+
+
