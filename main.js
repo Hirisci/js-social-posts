@@ -63,9 +63,22 @@ function printMember(container, post) {
     postHTML.querySelector(".post__image img").src = post.media;
     postHTML.querySelector(".post-meta__author").innerHTML = post.author.name;
     postHTML.querySelector(".post-meta__time").innerHTML = post.created.split("-").reverse().join("-");
-    postHTML.querySelector(".profile-pic").src = post.author.image;
     postHTML.querySelector("#like-counter-1").innerHTML = post.likes
-    postHTML.querySelector(".like-button").id = post.id
+    postHTML.querySelector(".like-button").setAttribute("data-postid", posts.id);
+    if(post.author.media===""){
+        delete postHTML.querySelector(".profile-pic");
+        const icon = postHTML.querySelector(".post-meta__icon");
+        const div = document.createElement("div")
+        const span = document.createElement("span")
+        div.classList.add("profile-pic-default")
+        icon.append(div);
+        let letter  = post.author.name.split(" ")
+        span.innerHTML = `${letter[0][0]}${letter0[1][0]}`
+        div.append(span)
+    }else {
+        postHTML.querySelector(".profile-pic").src = post.author.image;
+    }
+    
     container.append(postHTML);
 }
 
