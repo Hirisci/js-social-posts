@@ -78,8 +78,12 @@ for (let i = 0; i < posts.length; i++) {
     printMember(containerHTML,posts[i])
 }
 
-
-
+for (let i = 0; i < likeBtn.length; i++) {
+    likeBtn[i].addEventListener("click",function(e){
+        console.log(this,e)
+    })
+    
+}
 
 
 
