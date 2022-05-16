@@ -5,7 +5,7 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=171",
         "author": {
             "name": "Phil Mangione",
-            "image": "https://unsplash.it/300/300?image=15"
+            "image": ""
         },
         "likes": 80,
         "created": "2021-06-25"
@@ -63,53 +63,52 @@ function printMember(container, post) {
     postHTML.querySelector(".post__image img").src = post.media;
     postHTML.querySelector(".post-meta__author").innerHTML = post.author.name;
     postHTML.querySelector(".post-meta__time").innerHTML = post.created.split("-").reverse().join("-");
-    postHTML.querySelector("#like-counter-1").innerHTML = post.likes
-    postHTML.querySelector(".like-button").setAttribute("data-postid", posts.id);
-    if(post.author.media===""){
-        delete postHTML.querySelector(".profile-pic");
+   
+    let likeCount = postHTML.querySelector("#like-counter-1");
+    likeCount.innerHTML = post.likes 
+
+    let btnLike = postHTML.querySelector(".like-button");
+    btnLike.setAttribute("data-postid", post.id);
+    btnLike.addEventListener("click", 
+        function(){
+            if(this.classList.contains("like-button--liked")){
+                this.classList.remove("like-button--liked");
+                likeCount.innerHTML--;
+                let index = this.getAttribute("data-postid")
+                postListLike = postListLike.filter(function(f) { return f !== index })
+                console.log(postListLike)
+            } else {
+                console.log(this)
+                this.classList.add("like-button--liked");
+                likeCount.innerHTML++;
+                postListLike.push(this.getAttribute("data-postid"));
+                console.log(postListLike)
+            }
+    })
+    if(post.author.image===""){
+        const img = postHTML.querySelector(".profile-pic")
         const icon = postHTML.querySelector(".post-meta__icon");
+        icon.removeChild(img)
         const div = document.createElement("div")
         const span = document.createElement("span")
         div.classList.add("profile-pic-default")
         icon.append(div);
         let letter  = post.author.name.split(" ")
-        span.innerHTML = `${letter[0][0]}${letter0[1][0]}`
+        span.innerHTML = `${letter[0][0]}${letter[1][0]}`
         div.append(span)
     }else {
         postHTML.querySelector(".profile-pic").src = post.author.image;
     }
-    
     container.append(postHTML);
 }
 
 
 const containerHTML = document.querySelector("#container");
 const templateHTML = document.querySelector("#tpl-post").content.cloneNode(true);
-
+let postListLike = [];
 
 for (let i = 0; i < posts.length; i++) {
     printMember(containerHTML,posts[i])
-}
-
-const likeBtn = document.querySelectorAll(".like-button")
-const likeCoun = document.querySelectorAll(".js-likes-counter")
-
-for (let i = 0; i < likeBtn.length; i++) {
-    likeBtn[i].addEventListener("click", function(){
-        if(this.classList.contains("like-button--liked")){
-            this.classList.remove("like-button--liked")
-            let tot =likeCoun[this.id-1].innerHTML 
-            tot--
-            likeCoun[this.id-1].innerHTML = tot
-        } else {
-            console.log("aggiungi sta classe")
-            this.classList.add("like-button--liked")
-            let tot =likeCoun[this.id-1].innerHTML 
-            tot++
-            likeCoun[this.id-1].innerHTML = tot
-        }
-    })
-    
 }
 
 
