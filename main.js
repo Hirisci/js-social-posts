@@ -65,22 +65,36 @@ function printMember(container, post) {
     postHTML.querySelector(".post-meta__time").innerHTML = post.created.split("-").reverse().join("-");
     postHTML.querySelector(".profile-pic").src = post.author.image;
     postHTML.querySelector("#like-counter-1").innerHTML = post.likes
+    postHTML.querySelector(".like-button").id = post.id
     container.append(postHTML);
 }
 
 
 const containerHTML = document.querySelector("#container");
 const templateHTML = document.querySelector("#tpl-post").content.cloneNode(true);
-const likeBtn = document.querySelectorAll(".like-button")
-const likeCoun = document.querySelectorAll(".js-likes-counter")
+
 
 for (let i = 0; i < posts.length; i++) {
     printMember(containerHTML,posts[i])
 }
 
+const likeBtn = document.querySelectorAll(".like-button")
+const likeCoun = document.querySelectorAll(".js-likes-counter")
+
 for (let i = 0; i < likeBtn.length; i++) {
-    likeBtn[i].addEventListener("click",function(e){
-        console.log(this,e)
+    likeBtn[i].addEventListener("click", function(){
+        if(this.classList.contains("like-button--liked")){
+            this.classList.remove("like-button--liked")
+            let tot =likeCoun[this.id-1].innerHTML 
+            tot--
+            likeCoun[this.id-1].innerHTML = tot
+        } else {
+            console.log("aggiungi sta classe")
+            this.classList.add("like-button--liked")
+            let tot =likeCoun[this.id-1].innerHTML 
+            tot++
+            likeCoun[this.id-1].innerHTML = tot
+        }
     })
     
 }
